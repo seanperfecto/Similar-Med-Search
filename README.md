@@ -1,5 +1,7 @@
 # Similar Medicine Search
 
+[Live Link](https://seanperfecto.github.io/Similar-Med-Search/)
+
 Using only React on the front end, this single page application takes in a search from the user for a drug, and collects related medicine with that query.
 
 ![MainPic](http://res.cloudinary.com/dqr2mejhc/image/upload/v1501480152/Screen_Shot_2017-07-30_at_10.45.56_PM_fjfob7.png)
