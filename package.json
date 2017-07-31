@@ -1,6 +1,7 @@
 {
   "name": "canvas_coding_challenge",
   "version": "0.1.0",
+  "homepage": "https://seanperfecto.github.io/Similar-Med-Search/",
   "private": true,
   "dependencies": {
     "react": "^15.6.1",
