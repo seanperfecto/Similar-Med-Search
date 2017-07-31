@@ -2,6 +2,8 @@
 
 Using only React on the front end, this single page application takes in a search from the user for a drug, and collects related medicine with that query.
 
+![MainPic](http://res.cloudinary.com/dqr2mejhc/image/upload/v1501480152/Screen_Shot_2017-07-30_at_10.45.56_PM_fjfob7.png)
+
 ### About
 
 This application does not use a backend (no data stored to a database), so its work horse is entirely on the React lifecycle. With the help of [Facebook's Create React App](https://github.com/facebookincubator/create-react-app), I was able to set up this application quick with its boilerplate.
