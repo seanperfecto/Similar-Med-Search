@@ -4,7 +4,7 @@ import './App.css';
 class App extends Component {
   constructor(props){
     super(props);
-    this.state = {drug: "", chosen: [], related: []};
+    this.state = {drug: "", chosen: [], related: [], searched: ""};
     this.updateSearch = this.updateSearch.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.searchRelated = this.searchRelated.bind(this);
@@ -17,7 +17,7 @@ class App extends Component {
 
   handleSubmit(e){
     e.preventDefault();
-    this.setState({related: []});
+    this.setState({related: [], searched: ""});
     fetch(`https://rxnav.nlm.nih.gov/REST/drugs.json?name=${this.state.drug}`)
       .then((resp) => resp.json())
       .then((data) => {
@@ -32,7 +32,7 @@ class App extends Component {
   }
 
   searchRelated(e, ele){
-    this.setState({related: []});
+    this.setState({related: [], searched: ele.synonym});
     if (ele !== "Not Found") {
       fetch(`https://rxnav.nlm.nih.gov/REST/rxcui/${ele.rxcui}/related.json?tty=IN`)
         .then((resp) => resp.json())
@@ -71,23 +71,28 @@ class App extends Component {
     }
     return (
       <div className="App">
+        <div>
         <div className="App-header">
-          Similar Medicine Search<br/>
           <form onSubmit={this.handleSubmit}>
-            <input type='text' onChange={this.updateSearch} value={this.state.drug} />
+            <span id="title">Search similar medicine for</span><input type='text' onChange={this.updateSearch} value={this.state.drug} />
+            <span id="title">.</span>
             <input type="submit" value="Submit" />
           </form>
         </div>
         <div className="App-intro">
           <div className='list-items'>
-            SELECT MEDICINE:<br/>
+            Please select:<br/>
+          <hr/>
             <ul>{listItems}</ul>
           </div>
           <div className='related-items'>
-            RELATED MEDICINE:<br/>
+            Related medicine for <span id='related'>{this.state.searched}</span>:<br/>
+          <hr/>
             <ul>{relatedItems}</ul>
           </div>
         </div>
+        </div>
+        <footer>By Sean Perfecto</footer>
       </div>
     );
   }
