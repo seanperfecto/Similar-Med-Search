@@ -4,7 +4,7 @@ import './App.css';
 class App extends Component {
   constructor(props){
     super(props);
-    this.state = {drug: "", chosen: [], related: ""};
+    this.state = {drug: "", chosen: [], related: []};
     this.updateSearch = this.updateSearch.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.searchRelated = this.searchRelated.bind(this);
@@ -31,6 +31,7 @@ class App extends Component {
   }
 
   searchRelated(e, ele){
+    this.setState({related: []});
     if (ele !== "Not Found") {
       fetch(`https://rxnav.nlm.nih.gov/REST/rxcui/${ele.rxcui}/related.json?tty=IN`)
         .then((resp) => resp.json())
@@ -40,14 +41,20 @@ class App extends Component {
           ingred.forEach((ing) => {
             ingredList.push(ing.rxcui);
           });
-          this.getRealatedDrugs(ingredList);
+          this.getRelatedDrugs(ingredList);
         });
     }
   }
 
-  getRealatedDrugs(list){
+  getRelatedDrugs(list){
     list.forEach((num) => {
-
+      fetch(`https://rxnav.nlm.nih.gov/REST/rxcui/${num}/related.json?tty=SCD+SBD`)
+        .then((resp) => resp.json())
+        .then((data) => {
+          this.setState({related: this.state.related.concat(data.relatedGroup.conceptGroup[0].conceptProperties)});
+          this.setState({related: this.state.related.concat(data.relatedGroup.conceptGroup[1].conceptProperties)});
+          console.log(this.state.related);
+        });
     });
   }
 
