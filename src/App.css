@@ -1,7 +1,21 @@
 .App-header {
-  background-color: #222;
+  background-color: #EFEFEF;
   height: 100px;
   padding: 20px;
   color: white;
   text-align: center;
+}
+
+.App-intro {
+  display: flex;
+  justify-content: space-around;
+  flex-basis: 0;
+}
+
+.list-items{
+  flex: 2;
+}
+
+.related-items{
+  flex: 3;
 }

@@ -17,6 +17,7 @@ class App extends Component {
 
   handleSubmit(e){
     e.preventDefault();
+    this.setState({related: []});
     fetch(`https://rxnav.nlm.nih.gov/REST/drugs.json?name=${this.state.drug}`)
       .then((resp) => resp.json())
       .then((data) => {
@@ -59,21 +60,33 @@ class App extends Component {
   }
 
   render() {
-    let listItems;
+    let listItems, relatedItems;
     if (this.state.chosen) {
       listItems = this.state.chosen.map((ele,idx) =>
         <li key={idx} onClick={(e)=>this.searchRelated(e, ele)}>{ele.synonym ? ele.synonym: ele}</li>);
     }
+    if (this.state.related) {
+      relatedItems = this.state.related.map((ele,idx) =>
+        <li key={idx}>{ele.name}</li>);
+    }
     return (
       <div className="App">
         <div className="App-header">
+          Similar Medicine Search<br/>
           <form onSubmit={this.handleSubmit}>
             <input type='text' onChange={this.updateSearch} value={this.state.drug} />
             <input type="submit" value="Submit" />
           </form>
         </div>
         <div className="App-intro">
-          <ul>{listItems}</ul>
+          <div className='list-items'>
+            SELECT MEDICINE:<br/>
+            <ul>{listItems}</ul>
+          </div>
+          <div className='related-items'>
+            RELATED MEDICINE:<br/>
+            <ul>{relatedItems}</ul>
+          </div>
         </div>
       </div>
     );
