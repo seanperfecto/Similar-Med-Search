@@ -7,6 +7,8 @@ class App extends Component {
     this.state = {drug: "", chosen: [], related: ""};
     this.updateSearch = this.updateSearch.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.searchRelated = this.searchRelated.bind(this);
+    this.getRelatedDrugs = this.getRelatedDrugs.bind(this);
   }
 
   updateSearch(e){
@@ -28,11 +30,32 @@ class App extends Component {
       });
   }
 
+  searchRelated(e, ele){
+    if (ele !== "Not Found") {
+      fetch(`https://rxnav.nlm.nih.gov/REST/rxcui/${ele.rxcui}/related.json?tty=IN`)
+        .then((resp) => resp.json())
+        .then((data) => {
+          let ingred = data.relatedGroup.conceptGroup[0].conceptProperties;
+          let ingredList = [];
+          ingred.forEach((ing) => {
+            ingredList.push(ing.rxcui);
+          });
+          this.getRealatedDrugs(ingredList);
+        });
+    }
+  }
+
+  getRealatedDrugs(list){
+    list.forEach((num) => {
+
+    });
+  }
+
   render() {
     let listItems;
     if (this.state.chosen) {
       listItems = this.state.chosen.map((ele,idx) =>
-        <li key={idx}>{ele.synonym ? ele.synonym: ele}</li>);
+        <li key={idx} onClick={(e)=>this.searchRelated(e, ele)}>{ele.synonym ? ele.synonym: ele}</li>);
     }
     return (
       <div className="App">
