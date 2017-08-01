@@ -54,7 +54,6 @@ class App extends Component {
         .then((data) => {
           this.setState({related: this.state.related.concat(data.relatedGroup.conceptGroup[0].conceptProperties)});
           this.setState({related: this.state.related.concat(data.relatedGroup.conceptGroup[1].conceptProperties)});
-          console.log(this.state.related);
         });
     });
   }
